@@ -19,8 +19,8 @@ app.use(cors({
 const conn = async () =>{
     return await mysql.createConnection({
         host:"localhost",
-        user:"root",
-        password:"",
+        user:"psych",
+        password:"1234",
         database:"psychpath"
     });
 }
