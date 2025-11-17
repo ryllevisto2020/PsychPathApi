@@ -226,6 +226,12 @@ app.get("/",(req,res)=>{
     return res.send("Server Working!")
 })
 
+app.get("/test",async(req,res)=>{
+    test = (await conn()).query(`SELECT * FROM tbl_lvl_one WHERE acc_id = ${req.body.id}`)
+    console.log(await test)
+    return res.json({code:200,message:"Accepted!"})
+})
+
 app.listen(2030,()=>{
     console.log("Listening on Port "+2030);
 })
