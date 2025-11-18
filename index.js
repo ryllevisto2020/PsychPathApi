@@ -270,16 +270,20 @@ app.post("/api/level/three/save",async(req,res)=>{
 })
 
 app.post("/api/leaderboard",async(req,res)=>{
-    overall = (await conn()).query("SELECT * FROM `tbl_lvl_three` INNER JOIN `tbl_account` ON `tbl_account`.`id` = `tbl_lvl_three`.`acc_id` ORDER BY `tbl_lvl_three`.`score` DESC")
-    clinical = (await conn()).query("SELECT * FROM `tbl_lvl_three` INNER JOIN `tbl_account` ON `tbl_account`.`id` = `tbl_lvl_three`.`acc_id`  WHERE mode='clinical' ORDER BY `tbl_lvl_three`.`score`  DESC")
-    educational = (await conn()).query("SELECT * FROM `tbl_lvl_three` INNER JOIN `tbl_account` ON `tbl_account`.`id` = `tbl_lvl_three`.`acc_id`  WHERE mode='educational' ORDER BY `tbl_lvl_three`.`score`  DESC")
-    industrial = (await conn()).query("SELECT * FROM `tbl_lvl_three` INNER JOIN `tbl_account` ON `tbl_account`.`id` = `tbl_lvl_three`.`acc_id`  WHERE mode='industrial' ORDER BY `tbl_lvl_three`.`score`  DESC")
-    await overall
-    await clinical
-    await educational
-    await industrial
-   (await conn()).destroy();
-    return res.json({overall:overall,clinical:clinical,educational:educational,industrial:industrial})
+    overall = (await conn()).query("SELECT * FROM `tbl_lvl_three` INNER JOIN `tbl_account` ON `tbl_account`.`id` = `tbl_lvl_three`.`acc_id` ORDER BY `tbl_lvl_three`.`score` DESC").then((c)=>{
+        return c
+    });
+    clinical = (await conn()).query("SELECT * FROM `tbl_lvl_three` INNER JOIN `tbl_account` ON `tbl_account`.`id` = `tbl_lvl_three`.`acc_id`  WHERE mode='clinical' ORDER BY `tbl_lvl_three`.`score`  DESC").then((c)=>{
+        return c
+    });
+    educational = (await conn()).query("SELECT * FROM `tbl_lvl_three` INNER JOIN `tbl_account` ON `tbl_account`.`id` = `tbl_lvl_three`.`acc_id`  WHERE mode='educational' ORDER BY `tbl_lvl_three`.`score`  DESC").then((c)=>{
+        return c
+    });
+    industrial = (await conn()).query("SELECT * FROM `tbl_lvl_three` INNER JOIN `tbl_account` ON `tbl_account`.`id` = `tbl_lvl_three`.`acc_id`  WHERE mode='industrial' ORDER BY `tbl_lvl_three`.`score`  DESC").then((c)=>{
+        return c
+    });
+    await conn.end
+    return res.json({overall:overall,clinical:clinical,educational:educational,industrial:await industrial})
 })
 
 app.get("/",(req,res)=>{
